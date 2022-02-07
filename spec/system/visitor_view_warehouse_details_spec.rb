@@ -39,6 +39,22 @@ describe 'Visitor view warehouses' do
     # Assert
     expect(current_path).to eq root_path
     expect(page).to have_content 'Nao foi possivel carregar dados do galpao no momento'
+  end
 
+  it "and the warehouse doesn't exist" do
+    # Arrange
+    warehouses = File.read(Rails.root.join('spec/support/api_resources/warehouses.json'))
+    r = Faraday::Response.new(status: 200, response_body: warehouses)
+    allow(Faraday).to receive(:get).with('http://localhost:3000/api/v1/warehouses').and_return(r)
+
+    sr = Faraday::Response.new(status: 404, response_body: '{}')
+    allow(Faraday).to receive(:get).with('http://localhost:3000/api/v1/warehouses/9999').and_return(sr)
+
+    # Act
+    visit warehouse_path(9999)
+
+    # Assert
+    expect(current_path).to eq root_path
+    expect(page).to have_content 'Galpao nao existe'
   end
 end
