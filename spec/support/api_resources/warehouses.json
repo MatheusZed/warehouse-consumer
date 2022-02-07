@@ -1,41 +1,43 @@
 [
   {
-    "id":1,
-    "name":"Guarulhos",
-    "code":"GRU",
-    "description":"Cidade pequena ok",
-    "city":"Osasco",
-    "state":"Sao Paulo",
-    "postal_code":"06162-250",
-    "total_area":2000,
-    "useful_area":1900,
+    "id": 1,
+    "name": "Guarulhos",
+    "code": "GRU",
+    "description": "Cidade pequena grande",
+    "address": "Rua sao joao dos campos",
+    "city": "Guarulhos",
+    "state": "SP",
+    "postal_code": "06162-250",
+    "total_area": 2000,
+    "useful_area": 1900,
     "product_category_warehouses":
     [
       {
-        "product_category_id":2
+        "product_category_id": 2
       },
       {
-        "product_category_id":1
+        "product_category_id": 1
       }
     ]
   },
   {
-    "id":1,
-    "name":"Salvador",
-    "code":"SSA",
-    "description":"Cidade pequena ok",
-    "city":"Osasco",
-    "state":"Sao Paulo",
-    "postal_code":"06162-250",
-    "total_area":2000,
-    "useful_area":1900,
+    "id": 1,
+    "name": "Salvador",
+    "code": "SSA",
+    "description": "Cidade pequena ok",
+    "address": "Rua sao joao dos servos",
+    "city": "Osasco",
+    "state": "Sao Paulo",
+    "postal_code": "06162-250",
+    "total_area": 2000,
+    "useful_area": 1900,
     "product_category_warehouses":
     [
       {
-        "product_category_id":2
+        "product_category_id": 2
       },
       {
-        "product_category_id":1
+        "product_category_id": 1
       }
     ]
   }
