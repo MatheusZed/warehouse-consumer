@@ -1,7 +1,8 @@
 class WarehousesController < ApplicationController
   def show
     id = params[:id]
-    response = Faraday.get("http://localhost:3000/api/v1/warehouses/#{id}")
+    api_domain = Rails.configuration.apis['warehouse_api']
+    response = Faraday.get("#{api_domain}/api/v1/warehouses/#{id}")
 
     case response.status
     when 200

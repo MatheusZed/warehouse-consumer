@@ -1,6 +1,7 @@
 class HomeController < ApplicationController
   def index
-    response = Faraday.get('http://localhost:3000/api/v1/warehouses')
+    api_domain = Rails.configuration.apis['warehouse_api']
+    response = Faraday.get("#{api_domain}/api/v1/warehouses")
     @warehouses = []
     if response.status == 200
       @warehouses = JSON.parse(response.body)
