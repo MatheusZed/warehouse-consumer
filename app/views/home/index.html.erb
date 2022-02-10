@@ -1,11 +1,13 @@
 <h1>Galpoes</h1>
 <%= flash['alert'] %>
 
-<% if @warehouses.empty? %>
-  <div class="info">Nenhum galpao disponivel</div>
-<% end %>
+<% unless @warehouses.nil? %>
+  <% if @warehouses.empty? %>
+    <div class="info">Nenhum galpao disponivel</div>
+  <% end %>
 
-<% @warehouses.each do |w| %>
-  <%= link_to w["name"], warehouse_path(w["id"]) %>
-  <%= w["code"] %>
+  <% @warehouses.each do |w| %>
+    <%= link_to w.name, warehouse_path(w.id) %>
+    <%= w.code %>
+  <% end %>
 <% end %>

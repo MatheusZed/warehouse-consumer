@@ -3,9 +3,16 @@ require 'rails_helper'
 describe 'Visitor view warehouses' do
   it 'on home page' do
     # Arrange
-    warehouses = File.read(Rails.root.join('spec/support/api_resources/warehouses.json'))
-    r = Faraday::Response.new(status: 200, response_body: warehouses)
-    allow(Faraday).to receive(:get).with('http://localhost:3000/api/v1/warehouses').and_return(r)
+    warehouses = []
+    warehouses << Warehouse.new(
+      id: 1, name: 'Guarulhos', code: 'GRU', address: 'Rua A',
+      postal_code: '00000-000', city: 'Guarulhos', state: 'Guarulhos'
+    )
+    warehouses << Warehouse.new(
+      id: 2, name: 'Salvador', code: 'SSA', address: 'Rua B',
+      postal_code: '00000-000', city: 'Salvador', state: 'Salvador'
+    )
+    allow(Warehouse).to receive(:all).and_return(warehouses)
 
     # Act
     visit root_path
@@ -19,8 +26,7 @@ describe 'Visitor view warehouses' do
 
   it "and there's no warehouse" do
     # Arrange
-    r = Faraday::Response.new(status: 200, response_body: '[]')
-    allow(Faraday).to receive(:get).with('http://localhost:3000/api/v1/warehouses').and_return(r)
+    allow(Warehouse).to receive(:all).and_return([])
 
     # Act
     visit root_path
@@ -31,8 +37,7 @@ describe 'Visitor view warehouses' do
 
   it 'and render an error message ig API is unavailable' do
     # Arrange
-    r = Faraday::Response.new(status: 503, response_body: '{}')
-    allow(Faraday).to receive(:get).with('http://localhost:3000/api/v1/warehouses').and_return(r)
+    allow(Warehouse).to receive(:all).and_return(nil)
 
     # Act
     visit root_path
