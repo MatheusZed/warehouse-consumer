@@ -1,9 +1,14 @@
-<%= @warehouse["name"] %>
-<%= @warehouse["code"] %>
-<%= @warehouse["description"] %>
-<%= @warehouse["address"] %>
-<%= @warehouse["city"] %>
-<%= @warehouse["state"] %>
-<%= @warehouse["postal_code"] %>
-<%= @warehouse["total_area"] %>
-<%= @warehouse["useful_area"] %>
+<h1>Galpao</h1>
+<%= flash['alert'] %>
+
+<% unless @warehouse.nil? %>
+  <%= @warehouse.name %>
+  <%= @warehouse.code %>
+  <%= @warehouse.description %>
+  <%= @warehouse.address %>
+  <%= @warehouse.city %>
+  <%= @warehouse.state %>
+  <%= @warehouse.postal_code %>
+  <%= @warehouse.total_area %>
+  <%= @warehouse.useful_area %>
+<% end %>

@@ -3,13 +3,14 @@ require 'rails_helper'
 describe 'Visitor view warehouses' do
   it 'on home page' do
     # Arrange
-    warehouses = File.read(Rails.root.join('spec/support/api_resources/warehouses.json'))
-    r = Faraday::Response.new(status: 200, response_body: warehouses)
-    allow(Faraday).to receive(:get).with('http://localhost:3000/api/v1/warehouses').and_return(r)
-
-    warehouse = File.read(Rails.root.join('spec/support/api_resources/warehouse.json'))
-    sr = Faraday::Response.new(status: 200, response_body: warehouse)
-    allow(Faraday).to receive(:get).with('http://localhost:3000/api/v1/warehouses/1').and_return(sr)
+    wh = []
+    wh << Warehouse.new(
+      id: 1, name: 'Guarulhos', code: 'GRU', address: 'Rua A',
+      postal_code: '00000-000', city: 'Osasco', state: 'SP',
+      description: 'Casa de praia', total_area: 200, useful_area: 100
+    )
+    allow(Warehouse).to receive(:all).and_return(wh)
+    allow(Warehouse).to receive(:find).with('1').and_return(wh.first)
 
     # Act
     visit root_path
@@ -18,43 +19,51 @@ describe 'Visitor view warehouses' do
     # Assert
     expect(page).to have_content 'Guarulhos'
     expect(page).to have_content 'GRU'
-    expect(page).to have_content 'Cidade pequena grande'
-    expect(page).to have_content 'Rua sao joao dos campos'
-    expect(page).to have_content '06162-250'
+    expect(page).to have_content 'Rua A'
+    expect(page).to have_content '00000-000'
+    expect(page).to have_content 'Osasco'
+    expect(page).to have_content 'SP'
+    expect(page).to have_content 'Casa de praia'
+    expect(page).to have_content '200'
+    expect(page).to have_content '100'
   end
 
-  it 'and the API is no longer responding' do
-    # Arrange
-    warehouses = File.read(Rails.root.join('spec/support/api_resources/warehouses.json'))
-    r = Faraday::Response.new(status: 200, response_body: warehouses)
-    allow(Faraday).to receive(:get).with('http://localhost:3000/api/v1/warehouses').and_return(r)
+  # it 'and the API is no longer responding' do
+  #   # Arrange
+  #   wh = []
+  #   wh << Warehouse.new(
+  #     id: 1, name: 'Guarulhos', code: 'GRU', address: 'Rua A',
+  #     postal_code: '00000-000', city: 'Osasco', state: 'SP',
+  #     description: 'Casa de praia', total_area: 200, useful_area: 100
+  #   )
+  #   allow(Warehouse).to receive(:all).and_return(wh)
+  #   allow(Warehouse).to receive(:find).with('').and_return(wh.first)
 
-    sr = Faraday::Response.new(status: 500, response_body: '{}')
-    allow(Faraday).to receive(:get).with('http://localhost:3000/api/v1/warehouses/1').and_return(sr)
+  #   # Act
+  #   visit root_path
+  #   click_on 'Guarulhos'
 
-    # Act
-    visit root_path
-    click_on 'Guarulhos'
+  #   # Assert
+  #   expect(current_path).to eq root_path
+  #   expect(page).to have_content 'Nao foi possivel carregar dados do galpao no momento'
+  # end
 
-    # Assert
-    expect(current_path).to eq root_path
-    expect(page).to have_content 'Nao foi possivel carregar dados do galpao no momento'
-  end
+  # it "and the warehouse doesn't exist" do
+  #   # Arrange
+  #   wh = []
+  #   wh << Warehouse.new(
+  #     id: 1, name: 'Guarulhos', code: 'GRU', address: 'Rua A',
+  #     postal_code: '00000-000', city: 'Osasco', state: 'SP',
+  #     description: 'Casa de praia', total_area: 200, useful_area: 100
+  #   )
+  #   allow(Warehouse).to receive(:all).and_return(wh)
+  #   allow(Warehouse).to receive(:find).with('9999').and_return(wh.first)
 
-  it "and the warehouse doesn't exist" do
-    # Arrange
-    warehouses = File.read(Rails.root.join('spec/support/api_resources/warehouses.json'))
-    r = Faraday::Response.new(status: 200, response_body: warehouses)
-    allow(Faraday).to receive(:get).with('http://localhost:3000/api/v1/warehouses').and_return(r)
+  #   # Act
+  #   visit warehouse_path(9999)
 
-    sr = Faraday::Response.new(status: 404, response_body: '{}')
-    allow(Faraday).to receive(:get).with('http://localhost:3000/api/v1/warehouses/9999').and_return(sr)
-
-    # Act
-    visit warehouse_path(9999)
-
-    # Assert
-    expect(current_path).to eq root_path
-    expect(page).to have_content 'Galpao nao existe'
-  end
+  #   # Assert
+  #   expect(current_path).to eq root_path
+  #   expect(page).to have_content 'Galpao nao existe'
+  # end
 end

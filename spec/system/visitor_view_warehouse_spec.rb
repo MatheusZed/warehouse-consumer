@@ -6,11 +6,13 @@ describe 'Visitor view warehouses' do
     warehouses = []
     warehouses << Warehouse.new(
       id: 1, name: 'Guarulhos', code: 'GRU', address: 'Rua A',
-      postal_code: '00000-000', city: 'Guarulhos', state: 'Guarulhos'
+      postal_code: '00000-000', city: 'Guarulhos', state: 'Guarulhos',
+      description: 'a', total_area: 200, useful_area: 100
     )
     warehouses << Warehouse.new(
       id: 2, name: 'Salvador', code: 'SSA', address: 'Rua B',
-      postal_code: '00000-000', city: 'Salvador', state: 'Salvador'
+      postal_code: '00000-000', city: 'Salvador', state: 'Salvador',
+      description: 'a', total_area: 200, useful_area: 100
     )
     allow(Warehouse).to receive(:all).and_return(warehouses)
 
